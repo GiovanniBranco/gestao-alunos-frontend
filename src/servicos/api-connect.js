@@ -30,10 +30,22 @@ async function criaRegistro(novoRegistro) {
   }
 }
 
-async function enviaArquivoViaURL() {}
+async function enviaArquivoViaURL(url, file) {
+  const fetchObj = buildFetchObj("PUT", "text/csv; charset=utf-8", file);
+
+  try {
+    const response = await fetch(url, fetchObj);
+
+    if (response.statusCode === 200) return "Upload do arquivo concluido";
+
+    return "Falha no upload";
+  } catch (error) {
+    return error;
+  }
+}
 
 async function geraPresignURL(fileKey) {
-  const preSignedUrl = await generateUrlS3(fileKey);
+  return await generateUrlS3(fileKey);
 }
 
 export { criaRegistro, enviaArquivoViaURL, geraPresignURL };
